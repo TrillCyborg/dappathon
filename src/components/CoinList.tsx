@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Card, Avatar, List, Skeleton } from 'antd'
 // import EOS from '../lib/eos'
 import { COINS } from '../consts'
+import { BalanceContext } from '../context';
 
 export interface CoinListProps {
   setBalance: (balance: number, symbol: string) => void,
@@ -19,30 +20,35 @@ export default class CoinList extends React.Component<CoinListProps, any> {
     //   const balance = await eos.getUserBalance(coin.symbol)
     //   setBalance(balance, coin.symbol)
     // }))
-    // this.setState({ loading: false })
+    this.setState({ loading: false })
   }
 
   public render() {
     const { balances } = this.props
     const { loading } = this.state
     return (
-      <Card>
-        <List
-          itemLayout="horizontal"
-          dataSource={COINS}
-          renderItem={(coin: any) => (
-            <List.Item>
-              <Skeleton loading={loading} active avatar paragraph={false}>
-                <List.Item.Meta
-                  avatar={<Avatar src={coin.icon} />}
-                  title={coin.title}
-                  description={balances[coin.symbol]}
-                />
-              </Skeleton>
-            </List.Item>
-          )}
-        />
-      </Card>
+      <BalanceContext.Consumer>
+        {({ balancesLoading }) => (
+          <Card>
+            <List
+              itemLayout="horizontal"
+              dataSource={COINS}
+              renderItem={(coin: any) => (
+                <List.Item>
+                  <Skeleton loading={loading || balancesLoading} active avatar paragraph={false}>
+                    {console.log('balances', balances[coin.symbol])}
+                    <List.Item.Meta
+                      avatar={<Avatar src={coin.icon} />}
+                      title={coin.name}
+                      description={balances[coin.symbol]}
+                    />
+                  </Skeleton>
+                </List.Item>
+              )}
+            />
+          </Card>
+        )}
+      </BalanceContext.Consumer>
     );
   }
 }

@@ -23,7 +23,7 @@ export default class Header extends React.Component<HeaderProps, any> {
     const { deposit, withdraw } = this.props
     return (
       <HeaderRoot>
-        <div style={{ color: '#fff' }}>Iceberg</div>
+        <div style={{ color: '#fff', fontSize: 22 }}>SpearEOS</div>
         <div>
           <Button onClick={() => deposit()} type="primary" style={{ marginRight: 15 }}>Deposit</Button>
           <Button onClick={() => withdraw()} type="primary">Withdraw</Button>

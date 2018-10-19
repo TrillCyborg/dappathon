@@ -8,14 +8,19 @@ import CoinList from './components/CoinList'
 import { BalanceContext } from './context'
 import './App.css';
 import './lib/scatter'
+import bg from './assets/images/background.jpg'
 
 const AppRoot = styled.div`
   width: 100%;
   min-height: 100vh;
+  background-image: url(${bg});
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 `
 
 class App extends React.Component {
-  public state = { modalOpen: false, modalType: '', balances: { EOS: null, SYS: null } }
+  public state = { modalOpen: false, modalType: '', balances: { EOS: 0, BBNT: 0 }, balancesLoading: false }
 
   public toggleModal = (modalType?: DepositWithdrawType) =>
     this.setState({ modalOpen: !this.state.modalOpen, modalType: modalType || this.state.modalType })
@@ -29,11 +34,13 @@ class App extends React.Component {
   })
 
   public render() {
-    const { modalOpen, modalType, balances } = this.state
+    const { modalOpen, modalType, balances, balancesLoading } = this.state
     return (
       <BalanceContext.Provider value={{
         balances,
-        setBalance: this.setBalance
+        balancesLoading,
+        setBalance: this.setBalance,
+        setLoading: (bool: boolean) => this.setState({ balancesLoading: bool })
       }}>
         <AppRoot>
           <Header
@@ -41,15 +48,15 @@ class App extends React.Component {
             withdraw={() => this.toggleModal(DepositWithdrawType.WITHDRAW)}
           />
           <Row style={{ margin: 26 }}>
-            <Col span={4} style={{ padding: 15 }}>
-              <CoinList setBalance={this.setBalance} balances={this.state.balances} />
+            <Col span={6} style={{ padding: 15 }}>
+              <CoinList setBalance={this.setBalance} balances={balances} />
             </Col>
-            <Col span={10} style={{ padding: 15 }}>
+            <Col span={18} style={{ padding: 15 }}>
               <Executioner />
             </Col>
-            <Col span={10} style={{ padding: 15 }}>
+            {/* <Col span={10} style={{ padding: 15 }}>
               derp
-            </Col>
+            </Col> */}
           </Row>
           <DepositWithdrawModal
             open={modalOpen}
