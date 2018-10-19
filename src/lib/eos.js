@@ -127,3 +127,28 @@ export const withdraw = async (eos, userAccount, symbol, amount) => {
     })
 
 }
+
+export default class EOS {
+    constructor() {
+        this.account = window.scatter.identity.accounts.find((x) => x.blockchain === 'eos');
+        this.eos = window.eos
+    }
+
+    getUserBalance = (symbol) => getUserBalance(this.eos, this.account, symbol)
+    
+    getIcebergBalance = (symbol) => getIcebergBalance(this.eos, symbol)
+    
+    getParams = () => getParams(this.eos)
+    
+    setParams = (avgTrade, minPrice, tokenCurrency, tokenContract) => setParams(this.eos, avgTrade, minPrice, tokenCurrency, tokenContract)
+    
+    start = () => start(this.eos)
+
+    stop = () => stop(this.eos)
+
+    trade = () => trade(this.eos)
+
+    deposit = (symbol, amount) => deposit(this.eos, this.account, symbol, amount)
+    
+    withdraw = (symbol, amount) => withdraw(this.eos, this.account, symbol, amount)
+}
