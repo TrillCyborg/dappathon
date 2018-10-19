@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tooltip, Card, Row, Col, Input, Icon, Form, Button, Slider } from 'antd'
+import { Card, Row, Col, Input, Icon, Form, Button, Slider } from 'antd'
 import CoinSelect, { CoinSelectTypes } from './CoinSelect'
 import { COINS } from '../consts'
 
@@ -30,9 +30,7 @@ export default class Executioner extends React.Component<ExecutionerProps, any> 
               </div>
             </Col>
             <Col span={4} style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
-              <Tooltip placement="top" title="Swap">
-                <Icon style={{ fontSize: 18, marginTop: 50 }} type="swap" theme="outlined" />
-              </Tooltip>
+              <Icon style={{ fontSize: 18, marginTop: 50 }} type="swap" theme="outlined" />
             </Col>
             <Col span={10} style={{ display: 'flex', justifyContent: 'center' }}>
               <div style={{ width: '100%' }}>
