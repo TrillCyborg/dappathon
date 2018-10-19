@@ -7,12 +7,12 @@ export interface ExecutionerProps {
 }
 
 export default class Executioner extends React.Component<ExecutionerProps, any> {
-  public state = { fromCoin: COINS[0].symbol, toCoin: COINS[1].symbol }
+  public state = { fromCoin: COINS[0].symbol, toCoin: COINS[1].symbol, running: false }
 
   public handleChangeCoin = (coin: string, type: string) => this.setState({ [type]: coin })
 
   public render() {
-    const { fromCoin, toCoin } = this.state
+    const { fromCoin, toCoin, running } = this.state
     return (
       <div>
         <Card style={{ width: '100%' }}>
@@ -56,7 +56,7 @@ export default class Executioner extends React.Component<ExecutionerProps, any> 
           borderTopRightRadius: 0,
           position: 'relative',
           bottom: 1,
-        }}>START</Button>
+        }} onClick={() => this.setState({ running: true })} loading={running}>{running ? '' : 'START'}</Button>
       </div>
     );
   }
